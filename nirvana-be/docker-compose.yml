@@ -11,7 +11,7 @@ services:
     container_name: nirvana_api
     stdin_open: true
     networks:
-      - core_service_network
+      - nirvana_core_service_network
     volumes:
       - .:/opt/app/nirvana-backend
       - backend_node_modules:/opt/app/nirvana-backend/node_modules
@@ -25,7 +25,7 @@ services:
     ports:
       - 3306:3306
     networks:
-      - core_service_network
+      - nirvana_core_service_network
     volumes:
       - mysql_data_container:/var/lib/mysql
 
@@ -34,6 +34,6 @@ volumes:
   backend_node_modules:
 
 networks:
-  core_service_network:
+  nirvana_core_service_network:
     driver: bridge
-    name: core_service_network
+    name: nirvana_core_service_network
