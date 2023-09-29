@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    env_file: .env
+    container_name: nirvana_api
+    stdin_open: true
+    networks:
+      - core_service_network
+    volumes:
+      - .:/opt/app/nirvana-backend
+      - backend_node_modules:/opt/app/nirvana-backend/node_modules
+    depends_on:
+      - mysql-database
+
+  mysql-database:
+    image: mysql:latest
+    env_file: .env
+    container_name: nirvana_mysql
+    ports:
+      - 3306:3306
+    networks:
+      - core_service_network
+    volumes:
+      - mysql_data_container:/var/lib/mysql
+
+volumes:
+  mysql_data_container:
+  backend_node_modules:
+
+networks:
+  core_service_network:
+    driver: bridge
+    name: core_service_network
